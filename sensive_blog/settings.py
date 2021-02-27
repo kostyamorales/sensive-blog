@@ -6,7 +6,6 @@ env.read_env()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
 SECRET_KEY = env.str("SECRET_KEY", "REPLACE_ME")
@@ -50,7 +49,7 @@ STATIC_ROOT = ''
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
