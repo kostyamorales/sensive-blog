@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from blog.models import Comment, Post, Tag
 from django.db.models import Count
+from django.http import HttpResponse
+import logging
+
+logger = logging.getLogger()
 
 
 def serialize_post(post):
@@ -42,7 +46,12 @@ def index(request):
 
 
 def post_detail(request, slug):
-    post = Post.objects.annotate(likes_count=Count('likes')).get(slug=slug)
+    try:
+        post = Post.objects.annotate(likes_count=Count('likes')).get(slug=slug)
+    except Post.DoesNotExist as error:
+        logger.info(error)
+        return HttpResponse('404 Not Found')
+
     comments = Comment.objects.filter(post=post).select_related('author')
 
     serialized_comments = []
@@ -81,7 +90,11 @@ def post_detail(request, slug):
 
 
 def tag_filter(request, tag_title):
-    tag = Tag.objects.get(title=tag_title)
+    try:
+        tag = Tag.objects.get(title=tag_title)
+    except Post.DoesNotExist as error:
+        logger.info(error)
+        return HttpResponse('404 Not Found')
 
     most_popular_tags = Tag.objects.popular().annotate(posts_count=Count('posts'))[:5]
 
