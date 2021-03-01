@@ -8,9 +8,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
-SECRET_KEY = env.str("SECRET_KEY", "REPLACE_ME")
+SECRET_KEY = env.str('SECRET_KEY', 'REPLACE_ME')
 
-DEBUG = env.bool("DEBUG", True)
+DEBUG = env.bool('DEBUG', True)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
